@@ -48,6 +48,7 @@ public class CRUD extends javax.swing.JFrame {
         edit_btn = new javax.swing.JButton();
         delete_btn = new javax.swing.JButton();
         refresh_btn = new javax.swing.JButton();
+        id_barang = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +111,11 @@ public class CRUD extends javax.swing.JFrame {
         });
 
         delete_btn.setText("Delete");
+        delete_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_btnActionPerformed(evt);
+            }
+        });
 
         refresh_btn.setText("Refresh");
         refresh_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +123,8 @@ public class CRUD extends javax.swing.JFrame {
                 refresh_btnActionPerformed(evt);
             }
         });
+
+        id_barang.setText("id");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,20 +137,20 @@ public class CRUD extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(89, 89, 89)
                                 .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(kode_barang)
                             .addComponent(nama_barang)
                             .addComponent(jumlah_barang)
-                            .addComponent(tgl_in, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)))
+                            .addComponent(tgl_in, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(id_barang))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,8 +171,8 @@ public class CRUD extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(kode_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(kode_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(id_barang))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(nama_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,7 +186,7 @@ public class CRUD extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tgl_in, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -221,11 +229,13 @@ public class CRUD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         kosong();
+        load_table();
     }//GEN-LAST:event_add_btnActionPerformed
 
     private void refresh_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refresh_btnActionPerformed
         // TODO add your handling code here:
         load_table();
+        kosong();
     }//GEN-LAST:event_refresh_btnActionPerformed
 
     private void tabel_crudMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_crudMouseClicked
@@ -233,15 +243,18 @@ public class CRUD extends javax.swing.JFrame {
         int baris = tabel_crud.rowAtPoint(evt.getPoint());
         
         String id_brg =  tabel_crud.getValueAt(baris, 0).toString();
-        kode_barang.setText(id_brg);
+        id_barang.setText(id_brg);
         
-        String nama_brg =tabel_crud.getValueAt(baris, 1).toString();
+        String kd_brg =  tabel_crud.getValueAt(baris, 1).toString();
+        kode_barang.setText(kd_brg);
+        
+        String nama_brg =tabel_crud.getValueAt(baris, 2).toString();
         nama_barang.setText(nama_brg);
  
-        String jml = tabel_crud.getValueAt(baris, 2).toString();
+        String jml = tabel_crud.getValueAt(baris, 3).toString();
         jumlah_barang.setText(jml);
         
-        String tgll=tabel_crud.getValueAt(baris, 3).toString();
+        String tgll=tabel_crud.getValueAt(baris, 4).toString();
         tgl_in.setText(tgll);
     }//GEN-LAST:event_tabel_crudMouseClicked
 
@@ -258,7 +271,7 @@ public class CRUD extends javax.swing.JFrame {
                     +"',tgl= '"
                     +tgl_in.getText()
                     +"' WHERE id = '"
-                    +kode_barang.getText()+"'";
+                    +id_barang.getText()+"'";
             java.sql.Connection conn=(Connection)Config.configDB();
             java.sql.PreparedStatement pst=conn.prepareStatement(sql);
             pst.execute();
@@ -269,6 +282,22 @@ public class CRUD extends javax.swing.JFrame {
         load_table();
         kosong();
     }//GEN-LAST:event_edit_btnActionPerformed
+
+    private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
+        // TODO add your handling code here:
+         // fungsi hapus data
+        try {
+            String sql ="delete from tb_barang where id='"+id_barang.getText()+"'";
+            java.sql.Connection conn=(Connection)Config.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(this, "berhasil di hapus");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        kosong();
+        load_table();
+    }//GEN-LAST:event_delete_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,6 +338,7 @@ public class CRUD extends javax.swing.JFrame {
     private javax.swing.JButton add_btn;
     private javax.swing.JButton delete_btn;
     private javax.swing.JButton edit_btn;
+    private javax.swing.JLabel id_barang;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -357,6 +387,7 @@ public class CRUD extends javax.swing.JFrame {
         nama_barang.setText(null);
         jumlah_barang.setText(null);
         tgl_in.setText(null);  
+        id_barang.setText(null);  
     }
     
     
